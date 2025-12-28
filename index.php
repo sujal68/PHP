@@ -63,6 +63,7 @@ if (isset($_POST["btn-submit"])) {
 
    if ($response) {
       echo "Student Insertion Successfully..";
+      header("Location: config/dashboard.php");
    } else {
       echo "Student Insertion Failed..";
    }

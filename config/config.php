@@ -25,6 +25,20 @@ class Config
         return mysqli_query($this->result, $query); // return boolean value karenga 
 
     }
+
+    public function fetchAllStudents()
+    {
+        $this->initDataBase();
+        $query = "SELECT * FROM student;";
+        return mysqli_query($this->result, $query); // return mysqli object
+    }
+
+    public function deleteStudent($id)
+    {
+        $this->initDataBase();
+        $query = "DELETE FROM student WHERE id = $id;";
+        return mysqli_query($this->result, $query); // return boolean value karenga 
+    }
 }
 
 
