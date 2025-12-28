@@ -13,6 +13,14 @@ if ($res) {
 
 echo "<br>";
 echo "<br>";
+
+$editData = null;
+
+if (isset($_GET['id'])) {
+   $id = $_GET['id'];
+   $result = $config->getStudent($id);
+   $editData = mysqli_fetch_assoc($result);
+}
 // echo "hello Dosto" . "<br>";
 
 // class student{
@@ -50,6 +58,7 @@ echo "<br>";
 
 
 // @ error controll operator
+// insert logic 
 if (isset($_POST["btn-submit"])) {
    $name = $_POST["name"];
    $age = $_POST["age"];
@@ -68,6 +77,25 @@ if (isset($_POST["btn-submit"])) {
       echo "Student Insertion Failed..";
    }
 }
+if (isset($_POST['btn-submit'])) {
+
+   $name = $_POST['name'];
+   $age = $_POST['age'];
+   $course = $_POST['course'];
+
+   if (isset($_POST['student_id'])) {
+      $id = $_POST['student_id'];
+      $response = $config->updateStudent($id, $name, $age, $course);
+   } else {
+      $response = $config->InsertStudent($name, $age, $course);
+   }
+
+   header("Location: /config/dashboard.php");
+   exit();
+}
+
+
+
 
 
 ?>
@@ -159,22 +187,29 @@ if (isset($_POST["btn-submit"])) {
       <h1>Student Information</h1>
 
       <form method="post" action="">
+
+         <input type="hidden" name="student_id" value="<?php echo $editData['id'] ?? ''; ?>">
          <div class="form-group">
             <label>Full Name</label>
-            <input type="text" name="name" placeholder="Enter your name" required>
+            <input type="text" name="name" placeholder="Enter your name" value="<?php echo $editData['name'] ?? ''; ?>"
+               required>
          </div>
 
-         <div class="form-group">
+         <div class=" form-group">
             <label>Age</label>
-            <input type="number" name="age" placeholder="Enter your age" required>
+            <input type="number" name="age" placeholder="Enter your age" value="<?php echo $editData['age'] ?? ''; ?>"
+               required>
          </div>
 
          <div class="form-group">
             <label>Course</label>
-            <input type="text" name="course" placeholder="Enter your course" required>
+            <input type="text" name="course" placeholder="Enter your course"
+               value="<?php echo $editData['course'] ?? ''; ?>" required>
          </div>
 
-         <button type="submit" name="btn-submit">Save Details</button>
+         <button type="submit" name="btn-submit">
+            <?php echo $editData ? "Update Student" : "Save Student"; ?>
+         </button>
       </form>
 
       <div class="footer-text">

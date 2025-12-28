@@ -19,14 +19,36 @@ if (isset($_POST['btn_delete'])) {
     $config->deleteStudent($student_id);
 
     if ($result = $config->deleteStudent($student_id)) {
-        echo '<div class="alert alert-success alert-dismissable fade show" role="alert"><strong>Success !</strong>Student deleted successfully...</div>';
+        echo '<div class="alert alert-success alert-dismissable fade show" role="alert">
+        <strong>Success !</strong>Student deleted successfully...</div>';
         $response = $config->fetchAllStudents();
     } else {
-        echo '<div class="alert alert-danger alert-dismissable fade show" role="alert"><strong>Error !</strong>Failed to delete student...</div>';
+        echo '<div class="alert alert-danger alert-dismissable fade show" role="alert">
+        <strong>Error !</strong>Failed to delete student...</div>';
 
     }
 
 }
+
+// update student
+if (isset($_POST['btn_update'])) {
+    $student_id = $_POST['update_id'];
+    $name = $_POST['name'];
+    $age = $_POST['age'];
+    $course = $_POST['course'];
+
+    $config->getStudent($student_id);
+
+    if ($config->getStudent($student_id)) {
+        echo '<div class="alert alert-success alert-dismissable fade show" role="alert">
+        <strong>Success !</strong>Student updated successfully...</div>';
+        $response = $config->fetchAllStudents();
+    } else {
+        echo '<div class="alert alert-danger alert-dismissable fade show" role="alert">
+        <strong>Error !</strong>Failed to update student...</div>';
+    }
+}
+
 
 ?>
 
@@ -186,9 +208,12 @@ if (isset($_POST['btn_delete'])) {
                             <form method="post">
                                 <input type="hidden" name="delete_id" value="<?php echo $data['id']; ?>">
                                 <button name="btn_delete" class="action-btn delete">Delete</button>
-                                <input type="hidden" name="update_id" value="<?php echo $data['id'] ?>">
-                                <button name="btn_edit" class="action-btn edit">Edit</button>
                             </form>
+                            <form method="get" action="../../APIs/">
+                                <input type="hidden" name="id" value="<?php echo $data['id']; ?>">
+                                <button type="submit" class="action-btn edit">Edit</button>
+                            </form>
+
                         </td>
                     </tr>
 

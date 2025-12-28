@@ -39,6 +39,24 @@ class Config
         $query = "DELETE FROM student WHERE id = $id;";
         return mysqli_query($this->result, $query); // return boolean value karenga 
     }
+
+    public function getStudent($id)
+    {
+        $this->initDataBase();
+        $query = "SELECT * FROM student WHERE id = $id;";
+        return mysqli_query($this->result, $query); // return mysqli object
+    }
+    public function updateStudent($id, $name, $age, $course)
+    {
+        $this->initDataBase();
+
+        $query = "UPDATE student 
+              SET name='$name', age=$age, course='$course'
+              WHERE id=$id";
+
+        return mysqli_query($this->result, $query);
+    }
+
 }
 
 
